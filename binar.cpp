@@ -39,14 +39,11 @@ void Binar::add_element_iter(node *add_data)
 	if (tmp_slow->data > add_data->data)
 	{
         tmp_slow->size += 1;
-		//tmp_slow->size_left += 1;
-	//std::cout<<"a\n";
 		tmp_slow->left = add_data;
 	}
 	else
 	{
         tmp_slow->size += 1;
-		//tmp_slow->size_right += 1;
 		tmp_slow->right = add_data;
 	}
 }
@@ -65,11 +62,9 @@ int Binar::post_order_iter()
 	int max = 0;
 	int counter = 0;
 	std::stack <node *> root_stock;
-	
-	//tmp = nullptr;
+
 	while (!root_stock.empty() || tmp != nullptr)
 	{
-		//printf("ee %i]\n", tmp != nullptr);
 		if (tmp != nullptr)
 		{
 			root_stock.push(tmp);
@@ -113,6 +108,7 @@ int Binar::max_hegh()
 	node *tmp = m_head;
 	return(high_recursiv(tmp));
 }
+
 Binar::~Binar()
 {
 	node *tmp;
@@ -128,18 +124,15 @@ Binar::~Binar()
 		else
 		{
 			m_head = root_stock.top();
-			//std::cout << " mhead "<< m_head->data<<std::endl;
 			if (m_head->right == nullptr || tmp == m_head->right)
 			{
 				root_stock.pop();
-				//std::cout << " pop "<< m_head->data<< " size "<<m_head->size<< " left = "<<m_head->size_left<<" right = "<<m_head->size_right<<std::endl;
 				tmp = m_head;
 				delete m_head;
 				m_head = nullptr;
 			}
 			else
 			{
-				//std::cout<< "right = " << m_head->data<<std::endl;
 				m_head = m_head->right;
 			}
 		}
