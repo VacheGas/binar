@@ -9,43 +9,36 @@ void Binar::add_element_iter(node *add_data)
 	tmp_slow = m_head;
 	if (m_head->data > add_data->data)
 	{
-		m_head->size_left += 1;
-		highe += 1;
 		tmp_quick = m_head->left;
 	}
 	else
 	{
-		m_head->size_right += 1;
-		highe += 1;
 		tmp_quick = m_head->right;
 	}
+	highe += 1;
 	while (tmp_quick != nullptr)
 	{
 		tmp_slow->size += 1;
 		tmp_slow = tmp_quick;
 		if (tmp_quick->data > add_data->data)
 		{
-			tmp_quick->size_left += 1;
-			highe += 1;
 			tmp_quick = tmp_quick->left;
 		}
 		else
 		{
-			tmp_quick->size_right += 1;
-			highe += 1;
 			tmp_quick = tmp_quick->right;
 		}
+		highe += 1;
 	}
 	if (tmp_slow->data > add_data->data)
 	{
-        tmp_slow->size += 1;
 		tmp_slow->left = add_data;
 	}
 	else
 	{
-        tmp_slow->size += 1;
 		tmp_slow->right = add_data;
 	}
+	tmp_slow->size += 1;
 }
 
 Binar::Binar()
@@ -53,7 +46,7 @@ Binar::Binar()
 	m_head = nullptr;
 }
 
-int Binar::post_order_iter()
+int Binar::post_order_iter() const
 {
 	node *tmp;
 	node *other;
@@ -78,8 +71,7 @@ int Binar::post_order_iter()
 			{
 				root_stock.pop();
 				if (tmp->right == nullptr) {
-					if (counter > max)
-						max = counter;
+						max = std::max(max, counter);
 				}
 				counter--;
 				other = tmp;
@@ -95,18 +87,17 @@ int Binar::post_order_iter()
 	return max;
 }
 
-int Binar::high_recursiv(node *hegh)
+int Binar::heigh(node *hegh) const
 {
 	if (hegh == nullptr)
 		return  0;
-	return std::max(high_recursiv(hegh->left), high_recursiv(hegh->right)) + 1;
-	
+	return std::max(heigh(hegh->left), heigh(hegh->right)) + 1;
 }
 
-int Binar::max_hegh()
+int Binar::heigh() const
 {
 	node *tmp = m_head;
-	return(high_recursiv(tmp));
+	return(heigh(tmp));
 }
 
 Binar::~Binar()
@@ -139,28 +130,28 @@ Binar::~Binar()
 	}
 }
 
-bool Binar::find_rec(int key, node *head)
+bool Binar::find(int key, node *head) const
 {
 	if (head == nullptr)
 		return false;
 	if (head->data == key)
 		return true;
 	if (head->data > key) {
-		return (find_rec(key, head->left));
+		return (find(key, head->left));
 	}
 	else
 	{
-		return (find_rec(key, head->right));
+		return (find(key, head->right));
 	}
 	return false;
 }
 
-bool Binar::find(int key)
+bool Binar::find(int key) const
 {
 	node *tmp;
 
 	tmp = m_head;
-	return(find_rec(key, tmp));
+	return(find(key, tmp));
 }
 
 node *Binar::add_element_rec(node *add_element, node *head)
@@ -172,13 +163,10 @@ node *Binar::add_element_rec(node *add_element, node *head)
 	if (head->data > add_element->data)
 	{
 		head->left = add_element_rec(add_element, head->left);
-		head->size_left += 1;
 	}
 	else
 	{
 		head->right = add_element_rec(add_element, head->right);
-		
-		head->size_right += 1;
 	}
 	head->size += 1;
 	return head;
@@ -193,8 +181,6 @@ void Binar::add_node(int add_data, type_iter mod)
 	new_node->left = nullptr;
 	new_node->right = nullptr;
 	new_node->size = 0;
-	new_node->size_left = 0;
-	new_node->size_right = 0;
 	if (m_head == nullptr)
 	{
 		m_head = new_node;
@@ -214,15 +200,17 @@ void Binar::add_node(int add_data, type_iter mod)
 	}
 }
 
-bool Binar::is_search_tree()
+bool Binar::is_search_tree() const
 {
 	node *tmp = m_head;
 	std::stack <node *> root_stock;
 	while (tmp != nullptr || !root_stock.empty()) {
-		if (tmp != nullptr) {
+		if (tmp != nullptr)
+		{
 			root_stock.push(tmp);
 			tmp = tmp->left;
-			if (tmp != nullptr && tmp->data > (root_stock.top()->data)) {
+			if (tmp != nullptr && tmp->data > (root_stock.top()->data))
+			{
 				return  false;
 			}
 		}
@@ -241,50 +229,50 @@ bool Binar::is_search_tree()
 	return true;
 }
 
-void Binar::print_inorder(node *head)
+void Binar::inorder(node *head) const
 {
 	if (head == nullptr)
 		return;
-	print_inorder(head->left);
+	inorder(head->left);
 	std::cout << head->data << " ";
-	print_inorder(head->right);
+	inorder(head->right);
 }
 
-void Binar::print_inorder()
+void Binar::inorder() const
 {
 	node *tmp = m_head;
-	print_inorder(tmp);
+	inorder(tmp);
 	std::cout << std::endl;
 }
 
-void Binar::print_preorder(node *head)
+void Binar::preorder(node *head) const
 {
 	if (head == nullptr)
 		return;
 	std::cout << head->data << " ";
-	print_preorder(head->left);
-	print_preorder(head->right);
+	preorder(head->left);
+	preorder(head->right);
 }
 
-void Binar::print_preorder()
+void Binar::preorder() const
 {
 	node *tmp = m_head;
-	print_preorder(tmp);
+	preorder(tmp);
 	std::cout << std::endl;
 }
 
-void Binar::print_postorder(node *head)
+void Binar::postorder(node *head) const
 {
 	if (head == nullptr)
 		return;
-	print_postorder(head->left);
-	print_postorder(head->right);
+	postorder(head->left);
+	postorder(head->right);
 	std::cout << head->data << " ";
 }
 
-void Binar::print_postorder()
+void Binar::postorder() const
 {
 	node *tmp = m_head;
-	print_postorder(tmp);
+	postorder(tmp);
 	std::cout << std::endl;
 }
