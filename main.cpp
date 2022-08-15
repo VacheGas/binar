@@ -1,24 +1,15 @@
 #include "binar.hpp"
 int main()
 {
-	Binar b;
-   /* b.add_node(5,type_iter::ITER);
-	b.add_node(3,type_iter::ITER);
-	b.add_node(1,type_iter::ITER);
-	b.add_node(2,type_iter::ITER);
-	b.add_node(4,type_iter::ITER);
-	b.add_node(9,type_iter::ITER);
-	b.add_node(7,type_iter::ITER);
-	b.add_node(8,type_iter::ITER);
-	b.add_node(6,type_iter::ITER);*/
-    b.add_node(5,type_iter::RECURS);
-    b.add_node(3,type_iter::RECURS);
-    b.add_node(1,type_iter::RECURS);
-    b.add_node(2,type_iter::RECURS);
-    b.add_node(4,type_iter::RECURS);
-    b.add_node(9,type_iter::RECURS);
-    b.add_node(7,type_iter::RECURS);
-    b.add_node(8,type_iter::RECURS);
-    b.add_node(6,type_iter::RECURS);
+	BST b;
     
+    b.insert(5,type_iter::RECURS);
+    b.insert(3,type_iter::RECURS);
+    b.insert(1,type_iter::RECURS);
+    b.insert(2,type_iter::RECURS);
+    b.insert(4,type_iter::RECURS);
+    b.insert(9,type_iter::RECURS);
+    b.insert(7,type_iter::RECURS);
+    b.insert(8,type_iter::RECURS);
+    b.insert(6,type_iter::RECURS);
 }
